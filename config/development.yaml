@@ -1,0 +1,55 @@
+app:
+  name: "Bookmark AI Analyzer"
+  version: "1.0.0"
+  environment: "development"
+  debug: true
+
+logging:
+  level: "DEBUG"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/bookmark_analyzer.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+database:
+  type: "sqlite"
+  path: "data/bookmarks.db"
+  pool_size: 10
+  pool_timeout: 30
+
+processing:
+  batch_size: 10
+  max_workers: 4
+  checkpoint_interval: 50
+  checkpoint_dir: "data/checkpoints"
+
+extractors:
+  twitter:
+    base_url: "https://api.twitter.com/2"
+    timeout: 30
+    retry_attempts: 3
+    rate_limit:
+      requests_per_minute: 300
+      
+  web_scraping:
+    timeout: 30
+    retry_attempts: 3
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    delay_between_requests: 1.0
+
+analysis:
+  default_llm_provider: "claude"
+  enable_content_analysis: true
+  enable_categorization: true
+  enable_tagging: true
+  similarity_threshold: 0.7
+  
+knowledge_base:
+  output_dir: "data/knowledge_base"
+  formats: ["markdown", "json", "csv"]
+  include_metadata: true
+  
+monitoring:
+  enable_metrics: true
+  metrics_port: 8080
+  health_check_interval: 300

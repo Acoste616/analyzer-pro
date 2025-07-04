@@ -1,0 +1,72 @@
+# Core dependencies
+aiohttp>=3.9.0
+asyncio>=3.4.3
+pydantic>=2.5.0
+PyYAML>=6.0.1
+python-dateutil>=2.8.2
+
+# Database support
+aiosqlite>=0.19.0
+asyncpg>=0.29.0  # PostgreSQL support
+aiomysql>=0.2.0  # MySQL support
+
+# Data processing
+pandas>=2.1.0
+numpy>=1.24.0
+
+# Web scraping and content extraction
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+requests>=2.31.0
+selenium>=4.15.0  # For JavaScript-heavy sites
+
+# LLM API clients
+openai>=1.3.0  # For GPT models
+anthropic>=0.7.0  # For Claude
+google-generativeai>=0.3.0  # For Gemini
+httpx>=0.25.0  # HTTP client for async requests
+
+# Text processing and NLP
+nltk>=3.8.1
+spacy>=3.7.0
+textblob>=0.17.1
+langdetect>=1.0.9
+
+# Data validation and serialization
+marshmallow>=3.20.0
+jsonschema>=4.19.0
+
+# Caching and performance
+redis>=5.0.0
+aioredis>=2.0.1
+cachetools>=5.3.0
+
+# Configuration and environment
+python-dotenv>=1.0.0
+configparser>=6.0.0
+
+# Utilities
+click>=8.1.0  # CLI interface
+rich>=13.6.0  # Rich text and progress bars
+tqdm>=4.66.0  # Progress bars
+tabulate>=0.9.0  # Table formatting
+
+# Data formats
+openpyxl>=3.1.0  # Excel support
+xlsxwriter>=3.1.0
+python-docx>=1.1.0  # Word document support
+
+# Monitoring and metrics
+psutil>=5.9.0
+prometheus-client>=0.19.0
+
+# Security
+cryptography>=41.0.0
+bcrypt>=4.1.0
+
+# Date and time handling
+arrow>=1.3.0
+pytz>=2023.3
+
+# File handling and compression
+pathlibutils>=0.3.0

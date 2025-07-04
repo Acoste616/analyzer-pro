@@ -1,0 +1,92 @@
+llm_providers:
+  grok:
+    name: "Grok"
+    base_url: "https://api.x.ai/v1"
+    model: "grok-beta"
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1.0
+    rate_limit:
+      requests_per_minute: 60
+      tokens_per_minute: 200000
+    
+  claude:
+    name: "Claude"
+    base_url: "https://api.anthropic.com/v1"
+    model: "claude-3-sonnet-20240229"
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1.0
+    rate_limit:
+      requests_per_minute: 50
+      tokens_per_minute: 100000
+    
+  gemini:
+    name: "Gemini"
+    base_url: "https://generativelanguage.googleapis.com/v1beta"
+    model: "gemini-1.5-pro"
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1.0
+    rate_limit:
+      requests_per_minute: 60
+      tokens_per_minute: 120000
+
+analysis_prompts:
+  content_analysis:
+    system_prompt: |
+      You are an expert content analyzer. Analyze the provided content and extract key insights, themes, and actionable information.
+      Focus on identifying:
+      1. Main topics and themes
+      2. Key insights and learnings
+      3. Actionable advice or recommendations
+      4. Relevant technologies, tools, or methodologies mentioned
+      5. Author's expertise area and credibility indicators
+    
+    user_prompt: |
+      Please analyze the following content and provide a structured summary:
+      
+      Content: {content}
+      
+      Provide your analysis in the following format:
+      - **Main Topics**: [List of main topics]
+      - **Key Insights**: [List of key insights]
+      - **Actionable Items**: [List of actionable recommendations]
+      - **Technologies/Tools**: [List of mentioned technologies]
+      - **Author Expertise**: [Assessment of author's expertise]
+      - **Relevance Score**: [1-10 scale]
+  
+  categorization:
+    system_prompt: |
+      You are a content categorization expert. Categorize the provided content into appropriate categories.
+      Available categories: Technology, Business, Education, Health, Entertainment, Science, Politics, Sports, Lifestyle, Other
+    
+    user_prompt: |
+      Categorize the following content into one or more categories:
+      
+      Content: {content}
+      
+      Provide:
+      - **Primary Category**: [Main category]
+      - **Secondary Categories**: [Additional relevant categories]
+      - **Confidence Score**: [1-10 scale]
+  
+  tagging:
+    system_prompt: |
+      You are a content tagging expert. Generate relevant tags for the provided content.
+      Focus on extracting specific technologies, concepts, methodologies, and key terms.
+    
+    user_prompt: |
+      Generate relevant tags for the following content:
+      
+      Content: {content}
+      
+      Provide:
+      - **Tags**: [List of 5-15 relevant tags]
+      - **Tag Confidence**: [Confidence score for each tag]

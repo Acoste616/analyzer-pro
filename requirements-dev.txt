@@ -1,0 +1,83 @@
+# Include production requirements
+-r requirements.txt
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-xdist>=3.3.0  # Parallel test execution
+pytest-benchmark>=4.0.0  # Performance benchmarks
+coverage>=7.3.0
+factory-boy>=3.3.0  # Test data generation
+
+# Code quality and linting
+black>=23.9.0  # Code formatter
+isort>=5.12.0  # Import sorter
+flake8>=6.1.0  # Linting
+mypy>=1.6.0  # Type checking
+pylint>=3.0.0  # Additional linting
+bandit>=1.7.5  # Security linting
+pre-commit>=3.5.0  # Git hooks
+
+# Documentation
+sphinx>=7.2.0
+sphinx-rtd-theme>=1.3.0
+sphinx-autodoc-typehints>=1.25.0
+myst-parser>=2.0.0  # Markdown support for Sphinx
+
+# Development tools
+ipython>=8.16.0
+jupyter>=1.0.0
+notebook>=7.0.0
+jupyterlab>=4.0.0
+
+# Debugging and profiling
+pdb++>=0.10.3
+memory-profiler>=0.61.0
+py-spy>=0.3.14
+line-profiler>=4.1.0
+
+# API documentation
+flasgger>=0.9.7
+swagger-ui-bundle>=0.3.0
+
+# Environment and dependency management
+pip-tools>=7.3.0
+pipdeptree>=2.13.0
+
+# Mock and testing utilities
+responses>=0.23.0  # Mock HTTP responses
+freezegun>=1.2.0  # Mock datetime
+faker>=19.12.0  # Generate fake data
+hypothesis>=6.88.0  # Property-based testing
+
+# Performance testing
+locust>=2.17.0  # Load testing
+
+# Code analysis
+vulture>=2.10  # Dead code detection
+radon>=6.0.1  # Code complexity metrics
+xenon>=0.9.0  # Complexity monitoring
+
+# Security testing
+safety>=2.3.0  # Check for known security vulnerabilities
+semgrep>=1.45.0  # Static analysis security tool
+
+# Database development tools
+alembic>=1.12.0  # Database migrations
+sqlalchemy>=2.0.0  # ORM for development
+
+# Development servers and tools
+uvicorn>=0.23.0  # ASGI server
+gunicorn>=21.2.0  # WSGI server
+watchdog>=3.0.0  # File system monitoring
+
+# Graph and visualization (for analysis)
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.17.0
+
+# Jupyter extensions
+ipywidgets>=8.1.0
+jupyterlab-widgets>=3.0.0
