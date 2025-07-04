@@ -247,3 +247,92 @@ def create_config_template(output_path: Path) -> None:
         yaml.dump(template, f, default_flow_style=False, sort_keys=False)
     
     print(f"Configuration template created at: {output_path}")
+
+
+def create_example_config(config_path: Path, example_type: str = "minimal"):
+    """
+    Create an example configuration file.
+    
+    Args:
+        config_path: Path where to save the config
+        example_type: Type of example (minimal or full)
+    """
+    if example_type == "minimal":
+        config_content = """# Bookmark AI Analyzer Configuration
+
+# LLM Provider Settings (add your API keys)
+claude:
+  api_key: "your-claude-api-key-here"
+  model: "claude-3-opus-20240229"
+
+# Processing Settings
+processing:
+  batch_size: 10
+  analysis_depth: "comprehensive"
+  enable_video_extraction: true
+  enable_thread_reconstruction: true
+
+# Export Settings
+export:
+  default_formats: ["json"]
+"""
+    else:  # full
+        config_content = """# Bookmark AI Analyzer Configuration - Full Example
+
+# Default LLM provider
+default_llm: "claude"
+
+# Claude Configuration
+claude:
+  api_key: "your-claude-api-key-here"
+  model: "claude-3-opus-20240229"
+  max_tokens: 4096
+  temperature: 0.7
+  timeout: 30
+  max_retries: 3
+
+# Gemini Configuration
+gemini:
+  api_key: "your-gemini-api-key-here"
+  model: "gemini-pro"
+  max_tokens: 4096
+  temperature: 0.7
+  timeout: 30
+  max_retries: 3
+
+# Grok Configuration
+grok:
+  api_key: "your-grok-api-key-here"
+  model: "grok-1"
+  max_tokens: 4096
+  temperature: 0.7
+  timeout: 30
+  max_retries: 3
+
+# Processing Settings
+processing:
+  batch_size: 20
+  max_concurrent: 5
+  checkpoint_dir: "./checkpoints"
+  analysis_depth: "comprehensive"
+  enable_video_extraction: true
+  enable_thread_reconstruction: true
+
+# Export Settings
+export:
+  default_formats: ["json", "obsidian"]
+  anki_deck_name: "Twitter Bookmarks"
+  notion_database_id: ""
+  obsidian_vault_path: ""
+
+# Logging Settings
+logging:
+  level: "INFO"
+  format: "detailed"
+  file: "./logs/bookmark_analyzer.log"
+  max_file_size: "10MB"
+  backup_count: 5
+"""
+    
+    with open(config_path, 'w') as f:
+        f.write(config_content)

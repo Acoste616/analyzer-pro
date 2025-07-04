@@ -1,4 +1,4 @@
-"""Core processing modules for bookmark analysis."""
+"""Core processing modules."""
 
 from .bookmark_processor import BookmarkProcessor
 from .content_extractor import ContentExtractor
