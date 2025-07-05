@@ -6,6 +6,7 @@ from datetime import datetime
 
 from ..config.settings import settings_manager
 from ..utils.logger import get_logger
+from ..utils.cache_manager import cache_manager
 from ..llm.grok_client import GrokClient
 from ..llm.claude_client import ClaudeClient
 from ..llm.gemini_client import GeminiClient
@@ -76,6 +77,18 @@ class ContentAnalyzer:
         if provider not in self.clients:
             provider = next(iter(self.clients.keys()))
         
+        # Check cache first
+        cached_result = await cache_manager.get_cached_analysis(
+            content=content,
+            provider=provider,
+            temperature=0.3,
+            max_tokens=2000
+        )
+        
+        if cached_result:
+            self.logger.debug(f"Using cached analysis result for content (provider: {provider})")
+            return ContentAnalysisResult(**cached_result)
+        
         client = self.clients[provider]
         
         # Get analysis prompts
@@ -108,8 +121,19 @@ class ContentAnalyzer:
                     "analyzed_at": datetime.now().isoformat(),
                     "prompt_tokens": response.usage.get("prompt_tokens", 0),
                     "completion_tokens": response.usage.get("completion_tokens", 0),
-                    "total_tokens": response.usage.get("total_tokens", 0)
+                    "total_tokens": response.usage.get("total_tokens", 0),
+                    "from_cache": False
                 }
+                
+                # Cache the result
+                await cache_manager.cache_analysis(
+                    content=content,
+                    result=asdict(analysis_result),
+                    provider=provider,
+                    temperature=0.3,
+                    max_tokens=2000,
+                    ttl=3600  # Cache for 1 hour
+                )
                 
                 return analysis_result
                 

@@ -255,10 +255,77 @@ class BookmarkProcessor:
         if format == "json":
             return json.dumps([asdict(result) for result in results], indent=2, default=str)
         elif format == "csv":
-            # TODO: Implement CSV export
-            raise NotImplementedError("CSV export not yet implemented")
+            return self._export_csv(results)
         else:
             raise ValueError(f"Unsupported export format: {format}")
+    
+    def _export_csv(self, results: List[ProcessedBookmark]) -> str:
+        """Export results to CSV format"""
+        import csv
+        import io
+        
+        if not results:
+            return ""
+        
+        output = io.StringIO()
+        writer = csv.writer(output)
+        
+        # Write header
+        headers = [
+            'id', 'url', 'title', 'author', 'content_preview', 'bookmark_type',
+            'created_at', 'processed_at', 'processing_time', 'word_count',
+            'categories', 'tags', 'main_topics', 'key_insights', 'actionable_items',
+            'technologies_tools', 'author_expertise', 'relevance_score', 'sentiment',
+            'complexity_level', 'content_type', 'reading_time_minutes'
+        ]
+        writer.writerow(headers)
+        
+        # Write data rows
+        for result in results:
+            bookmark = result.bookmark_data
+            analysis = result.analysis_results.get('content_analysis', {})
+            
+            # Prepare content preview (first 100 chars)
+            content_preview = bookmark.content[:100] + "..." if len(bookmark.content) > 100 else bookmark.content
+            content_preview = content_preview.replace('\n', ' ').replace('\r', ' ')
+            
+            # Prepare list fields as comma-separated strings
+            categories_str = ", ".join(result.categories) if result.categories else ""
+            tags_str = ", ".join(result.tags) if result.tags else ""
+            
+            # Extract analysis fields
+            main_topics_str = ", ".join(analysis.get('main_topics', [])) if analysis.get('main_topics') else ""
+            key_insights_str = " | ".join(analysis.get('key_insights', [])) if analysis.get('key_insights') else ""
+            actionable_items_str = " | ".join(analysis.get('actionable_items', [])) if analysis.get('actionable_items') else ""
+            technologies_tools_str = ", ".join(analysis.get('technologies_tools', [])) if analysis.get('technologies_tools') else ""
+            
+            row = [
+                bookmark.id,
+                bookmark.url,
+                bookmark.title,
+                bookmark.author,
+                content_preview,
+                bookmark.bookmark_type,
+                bookmark.created_at.isoformat() if bookmark.created_at else "",
+                result.processed_at.isoformat() if result.processed_at else "",
+                result.processing_time,
+                analysis.get('word_count', 0),
+                categories_str,
+                tags_str,
+                main_topics_str,
+                key_insights_str,
+                actionable_items_str,
+                technologies_tools_str,
+                analysis.get('author_expertise', ""),
+                analysis.get('relevance_score', 0),
+                analysis.get('sentiment', ""),
+                analysis.get('complexity_level', ""),
+                analysis.get('content_type', ""),
+                analysis.get('reading_time_minutes', 0)
+            ]
+            writer.writerow(row)
+        
+        return output.getvalue()
     
     def clear_checkpoints(self, checkpoint_key: str = "bookmark_processing"):
         self.checkpoint_manager.clear_checkpoint(checkpoint_key)
